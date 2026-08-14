@@ -62,6 +62,9 @@ panel_about = block('<main id="panel-about"', '</main>')
 panel_work = block('<main id="panel-work"', '</main>')
 panel_brands = block('<main id="panel-brands"', '</main>')
 footer = block('<footer>', '</footer>')
+# The results disclaimer belongs on case study pages only, not sitewide.
+FINEPRINT = re.search(r'<p class="fineprint">.*?</p>', footer, re.S).group(0)
+footer_plain = footer.replace(FINEPRINT, '')
 
 # ---------- shared transforms ----------
 CASE_HREF = {
@@ -206,8 +209,9 @@ REVEAL_JS = '''<script>
 })();
 </script>'''
 
-def page(path, title, desc, active, body, extra_ld='', og_type='website'):
+def page(path, title, desc, active, body, extra_ld='', og_type='website', fineprint=False):
     url = DOMAIN + path
+    foot = footer if fineprint else footer_plain
     return '''<!doctype html>
 <html lang="en">
 <head>
@@ -247,7 +251,7 @@ def page(path, title, desc, active, body, extra_ld='', og_type='website'):
 %s
 </body>
 </html>
-''' % (title, desc, url, title, desc, url, og_type, DOMAIN, extra_ld, nav(active), body, footer, REVEAL_JS)
+''' % (title, desc, url, title, desc, url, og_type, DOMAIN, extra_ld, nav(active), body, foot, REVEAL_JS)
 
 # ---------- build output tree ----------
 if os.path.exists(OUT):
@@ -300,7 +304,7 @@ index_body = '''<main>
 write(os.path.join('case-studies', 'index.html'), page(
     '/case-studies/', 'SEO & GEO Case Studies With Real Numbers | LLM SEO, Link Building, Content',
     'Six SEO case studies with verified results: LLM SEO revenue growth, generative engine optimization, anchor-text link building, and content strategy at scale.',
-    '/case-studies/', index_body, PERSON_LD))
+    '/case-studies/', index_body, PERSON_LD, fineprint=True))
 
 # individual case pages
 for i, c in enumerate(CASES):
@@ -322,7 +326,7 @@ for i, c in enumerate(CASES):
 </main>''' % (c['name'], c['h1'], articles[c['cid']], prev_c['slug'], prev_c['name'], next_c['slug'], next_c['name'])
     write(os.path.join('case-studies', c['slug'], 'index.html'), page(
         '/case-studies/%s/' % c['slug'], c['title'] + ' | Tony Jackson', c['desc'],
-        '/case-studies/', body, breadcrumb_ld(c['name'], url), og_type='article'))
+        '/case-studies/', body, breadcrumb_ld(c['name'], url), og_type='article', fineprint=True))
 
 # brands
 write(os.path.join('brands', 'index.html'), page(

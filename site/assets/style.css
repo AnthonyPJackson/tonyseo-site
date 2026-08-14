@@ -340,6 +340,12 @@
   }
   .case-link:hover { color: var(--green); }
   .case-note { font-size: 13px; color: var(--ink-3); }
+  .case-body .subhead {
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(16px, 1.9vw, 19px); color: var(--ink);
+    margin: 24px 0 10px; padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
 
   /* ---------- brands ---------- */
   .brands { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
