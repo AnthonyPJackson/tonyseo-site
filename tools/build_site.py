@@ -264,13 +264,13 @@ write(os.path.join('assets', 'style.css'), css)
 # home
 write('index.html', page(
     '/', 'Anthony Jackson | SEO & AI Search Portfolio · GEO, LLM SEO, Link Building',
-    'SEO and AI search portfolio with receipts: +843% revenue from ChatGPT traffic, #29 to #2 rankings, and GEO campaigns for 17 brands. By Anthony Jackson, Associate Director of SEO & AI Search at GR0.',
+    'SEO and AI search portfolio with receipts: +843% revenue from ChatGPT traffic, #29 to #2 rankings, and GEO campaigns for 17 brands. By Anthony Jackson.',
     '/', home_inner, PERSON_LD))
 
 # about
 write(os.path.join('about', 'index.html'), page(
     '/about/', "From My Brother's Website to AI Search Director | About Anthony Jackson",
-    'How a 2016 SEO experiment became a career in search and generative engine optimization: freelance work, Head of SEO Operations, and now leading the AI search practice at GR0.',
+    'How a 2016 SEO experiment became a career in search and generative engine optimization: freelance work, Head of SEO Operations, and AI search work at GR0 today.',
     '/about/', about_inner, PERSON_LD))
 
 # case studies index
