@@ -106,9 +106,17 @@ home_inner = inner_main(panel_home)
 about_inner = inner_main(panel_about)
 brands_inner = inner_main(panel_brands)
 
-# about + brands: first h2 becomes the page h1
-about_inner = about_inner.replace('<h2>It started', '<h1 style="font-size: clamp(28px, 4.6vw, 46px); font-family: \'Bricolage Grotesque\', system-ui, sans-serif; font-weight: 750; line-height: 1.08; letter-spacing: -0.01em; margin: 0; text-wrap: balance;">It started', 1).replace("brother's website.</h2>", "brother's website.</h1>", 1)
-brands_inner = brands_inner.replace("<h2>Brands I've worked with.</h2>", '<h1 style="font-size: clamp(28px, 4.6vw, 46px); font-family: \'Bricolage Grotesque\', system-ui, sans-serif; font-weight: 750; line-height: 1.08; letter-spacing: -0.01em; margin: 0; text-wrap: balance;">Brands I\'ve worked with.</h1>', 1)
+# about + brands: promote the first h2 to the page h1 (copy-agnostic)
+H1_STYLE = ("font-size: clamp(28px, 4.6vw, 46px); font-family: 'Bricolage Grotesque', system-ui, sans-serif; "
+            "font-weight: 750; line-height: 1.08; letter-spacing: -0.01em; margin: 0; text-wrap: balance;")
+
+def promote_h2(s):
+    return re.sub(r'<h2>(.*?)</h2>',
+                  lambda m: '<h1 style="%s">%s</h1>' % (H1_STYLE, m.group(1)),
+                  s, count=1, flags=re.S)
+
+about_inner = promote_h2(about_inner)
+brands_inner = promote_h2(brands_inner)
 
 # ---------- case articles ----------
 articles = {}
@@ -269,8 +277,8 @@ write('index.html', page(
 
 # about
 write(os.path.join('about', 'index.html'), page(
-    '/about/', "From My Brother's Website to AI Search Director | About Anthony Jackson",
-    'How a 2016 SEO experiment became a career in search and generative engine optimization: freelance work, Head of SEO Operations, and AI search work at GR0 today.',
+    '/about/', 'Self-Taught SEO to AI Search | About Anthony Jackson',
+    'How teaching myself SEO in 2016 turned into a decade in search and generative engine optimization: freelance clients, Head of SEO Operations, and AI search work at GR0 today.',
     '/about/', about_inner, PERSON_LD))
 
 # case studies index
