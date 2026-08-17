@@ -176,6 +176,7 @@ def nav(active):
             '<span class="bn mono">Anthony Jackson</span></a>'
             '<div class="tabs">%s</div>'
             '<div class="navlinks">'
+            '<a href="/anthony-jackson-resume.pdf" target="_blank" rel="noopener">Resume</a>'
             '<a href="https://www.linkedin.com/in/anthony-jackson-seo/" target="_blank" rel="noopener">LinkedIn</a>'
             '<a href="mailto:tjackson15.17@gmail.com">Email</a>'
             '</div></div></nav>') % ''.join(links)
@@ -338,6 +339,8 @@ write(os.path.join('brands', 'index.html'), page(
 shutil.copy(FONT, os.path.join(OUT, 'assets', 'bricolage.woff2'))
 shutil.copy(AVATAR, os.path.join(OUT, 'assets', 'avatar.png'))
 shutil.copy(AVATAR, os.path.join(OUT, 'og-image.png'))
+shutil.copy(os.path.join(ROOT, 'tools', 'assets', 'resume.pdf'),
+            os.path.join(OUT, 'anthony-jackson-resume.pdf'))
 for f in os.listdir(LOGOS_DIR):
     shutil.copy(os.path.join(LOGOS_DIR, f), os.path.join(OUT, 'assets', 'logos', f))
 for f in ['favicon.ico', 'favicon-32.png', 'apple-touch-icon.png']:
